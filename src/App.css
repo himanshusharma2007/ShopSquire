@@ -1,0 +1,19 @@
+.website-name {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.Ubuntu {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.Lora {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+}
+@media (min-width: 768px) {
+  .device-screen {
+    min-height: 80vh;
+  }
+}

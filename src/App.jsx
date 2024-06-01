@@ -1,21 +1,16 @@
-import React, { useEffect } from "react";
-
+import React from 'react'
+import Layout from './components/Layout'
+import './App.css'
 const App = () => {
-  useEffect(() => {
-    const getData = async () => {
-      const url = "https://fakestoreapi.com/products";
+  return (
+    <div>
+      <Layout>
+        <div>
+          this is main section 
+        </div>
+      </Layout>
+    </div>
+  )
+}
 
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-        console.log(result);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
-  return <div>Hello There</div>;
-};
-
-export default App;
+export default App
