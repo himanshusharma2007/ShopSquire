@@ -58,7 +58,7 @@ const Footer = () => {
             Subscribe to Our Newsletter
           </h3>
           <form>
-            <div className="flex">
+            <div className="flex flex-wrap">
               <input
                 type="email"
                 placeholder="Enter your email"

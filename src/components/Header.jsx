@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { GrClose } from "react-icons/gr";
 import Filters from "./Filters";
 
-const Header = ({ FilterProducts }) => {
+const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -17,7 +17,7 @@ const Header = ({ FilterProducts }) => {
   };
 
   return (
-    <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 max-h-[35vh]  overflow-y-hidden">
+    <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 max-h-[35vh] overflow-y-hidden">
       <div className=" mx-auto flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
           <button className="md:hidden mr-4" onClick={toggleDrawer}>
@@ -30,12 +30,17 @@ const Header = ({ FilterProducts }) => {
             ShopSquire
           </a>
         </div>
-        <div className="hidden  md:flex  items-center  w-[40vw] ml-[110px]">
+        <div className="large-screen-search hidden md:flex items-center w-[40vw] ml-[110px]">
           <div className="relative mx-2 w-full">
             <input
               type="text"
               placeholder="Search..."
               className="border border-gray-300 w-full rounded-full px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                FilterProducts(searchTerm);
+              }}
             />
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
@@ -55,17 +60,26 @@ const Header = ({ FilterProducts }) => {
           </button>
         </div>
       </div>
-      <div className="flex  md:hidden  items-center w-full ">
+      <div className="flex md:hidden items-center w-full ">
         <div className="relative mx-4 my-1 w-full">
           <input
             type="text"
             placeholder="Search..."
-            className="border w-full Ubuntu border-gray-300 rounded-sm px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="small-screen-search border w-full Ubuntu border-gray-300 rounded-sm px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              FilterProducts(searchTerm);
+            }}
           />
           <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
       </div>
-      <Filters FilterProducts={FilterProducts} />
+      <Filters
+        FilterProducts={FilterProducts}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <Drawer
         open={isDrawerOpen}
         onClose={toggleDrawer}

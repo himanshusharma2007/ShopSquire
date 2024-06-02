@@ -5,7 +5,7 @@ const Filters = ({FilterProducts}) => {
     <div className="bg-gray-200 ">
       <div className=" mx-auto py-3 flex flex-wrap items-center justify-center space-x-2 space-y-3 sm:space-y-0 sm:space-x-4 Ubuntu">
         <button
-          onClick={() => FilterProducts("all")}
+          onClick={() => FilterProducts("")}
           className="px-4 py-2 rounded-full bg-white text-gray-600 hover:bg-gray-100 mt-3 sm:mt-0"
         >
           All Products

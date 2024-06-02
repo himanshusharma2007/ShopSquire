@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import ProductCard from "./ProductCard";
-
+import notfoundgif from "../assets/not-found.gif"
 const Layout = ({ children }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [loading,setLoading]=useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [NotFound, setNotFound] = useState(false);
+      console.log(NotFound);
+
+  console.log(searchTerm);
   useEffect(() => {
     const fetchData = async () => {
       const url = "https://fakestoreapi.com/products";
@@ -23,22 +28,53 @@ const Layout = ({ children }) => {
     };
     fetchData();
   }, []);
-
+  const NotFoundComp = () => {
+    console.log("not found")
+    return (
+      <div className="wraper flex justify-center items-center  mt-[35vh] sm:mt-[30vh] md:mt-[20vh]  device-screen">
+       
+        <img src={notfoundgif} alt="not found" className="w-[200px] h-[200px]"/>
+      </div>
+    );
+  };
   const FilterProducts = (type) => {
-    if (type === "all") {
+    if (type.trim() === "" && searchTerm.trim() === "") {
+      console.log("check1");
       setFilteredData(data);
-    }
-    else {
-      const dispData = data.filter((product) =>
+      return;
+    } else if (type.trim() !== "" && searchTerm.trim() === "") {
+      console.log("check2");
+      const filteredData = data.filter((product) =>
         product.category.toLowerCase().includes(type.toLowerCase())
       );
-      setFilteredData(dispData);
+      setFilteredData(filteredData);
+    } else {
+      console.log("check3");
+      const filteredData = data.filter(
+        (product) =>
+          product.category.toLowerCase().includes(type.toLowerCase()) ||
+          product.title
+            .toLowerCase()
+            .includes(searchTerm.trim().toLowerCase()) ||
+          product.category
+            .toLowerCase()
+            .includes(searchTerm.trim().toLowerCase())
+      );
+      setFilteredData(filteredData);
+      if (Object.keys(filteredData).length === 0) setNotFound(true);
+      else {
+        setNotFound(false);
+      }
     }
   };
 
   return (
     <>
-      <Header FilterProducts={FilterProducts} />
+      <Header
+        FilterProducts={FilterProducts}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       {loading ? (
         <div
           role="status"
@@ -46,7 +82,7 @@ const Layout = ({ children }) => {
         >
           <svg
             aria-hidden="true"
-            class="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-700"
+            className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-700"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -60,15 +96,21 @@ const Layout = ({ children }) => {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>
       ) : (
-        <div className="main mt-[35vh] sm:mt-[30vh] md:mt-[20vh]  device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20 px-4 py-5">
-          {filteredData &&
-            filteredData.map((product) => {
-              return <ProductCard key={product.id} product={product} />;
-            })}
-        </div>
+        <>
+          {NotFound ? (
+            <NotFoundComp />
+          ) : (
+            <div className="main mt-[35vh] sm:mt-[30vh] md:mt-[20vh]  device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20 px-4 py-5">
+              {filteredData &&
+                filteredData.map((product) => {
+                  return <ProductCard key={product.id} product={product} />;
+                })}
+            </div>
+          )}
+        </>
       )}
 
       <Footer />
