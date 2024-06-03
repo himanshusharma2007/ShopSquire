@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBars, FaSearch, FaUser, FaHeart } from "react-icons/fa";
+import { FaBars, FaSearch, FaUser, FaHeart, FaHome, FaShoppingCart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -8,6 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { GrClose } from "react-icons/gr";
 import Filters from "./Filters";
+import { Link } from "react-router-dom";
 
 const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -23,12 +24,11 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
           <button className="md:hidden mr-4" onClick={toggleDrawer}>
             <FaBars className="text-gray-600 text-xl" />
           </button>
-          <a
-            href="/"
-            className="website-name text-3xl  font-bold text-gray-800"
-          >
-            ShopSquire
-          </a>
+          <Link to="/">
+            <h1 className="website-name text-3xl  font-bold text-gray-800">
+              ShopSquire
+            </h1>
+          </Link>
         </div>
         <div className="large-screen-search hidden md:flex items-center w-[40vw] ml-[110px]">
           <div className="relative mx-2 w-full">
@@ -45,19 +45,31 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
-        <div className="flex items-center space-x-2 sm:space-x-6 ">
-          <button className=" flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
-            <FaUser className="text-xl" />
-            <p className="hidden md:block Ubuntu">Login</p>
-          </button>
-          <button className="  flex justify-center items-center space-x-1  text-gray-600 hover:text-gray-800">
-            <FiShoppingCart className="text-xl" />
-            <p className="hidden md:block Ubuntu">Cart</p>
-          </button>
-          <button className=" flex justify-center items-center space-x-1  text-gray-600 hover:text-gray-800">
-            <FaHeart className="text-xl" />
-            <p className="hidden md:block Ubuntu">Wishlist</p>
-          </button>
+        <div className="flex items-center space-x-2 sm:space-x-6">
+          <Link to="/">
+            <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
+              <FaHome className="text-xl" />
+              <p className="hidden md:block Ubuntu">Home</p>
+            </button>
+          </Link>
+          <Link to="/login">
+            <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
+              <FaUser className="text-xl" />
+              <p className="hidden md:block Ubuntu">Login</p>
+            </button>
+          </Link>
+          <Link to="/cart">
+            <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
+              <FaShoppingCart className="text-xl" />
+              <p className="hidden md:block Ubuntu">Cart</p>
+            </button>
+          </Link>
+          <Link to="/mywishlist">
+            <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
+              <FaHeart className="text-xl" />
+              <p className="hidden md:block Ubuntu">Wishlist</p>
+            </button>
+          </Link>
         </div>
       </div>
       <div className="flex md:hidden items-center w-full ">
