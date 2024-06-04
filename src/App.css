@@ -1,3 +1,4 @@
+
 .website-name {
   font-family: "Lobster Two", sans-serif;
   font-weight: 400;
@@ -12,8 +13,7 @@
   font-family: "Lora", serif;
   font-optical-sizing: auto;
 }
-@media (min-width: 768px) {
-  .device-screen {
-    min-height: 80vh;
-  }
+
+.device-screen {
+  min-height: 80vh;
 }

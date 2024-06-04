@@ -3,7 +3,12 @@ import ProductCard from "../components/ProductCard";
 import notfoundgif from "../assets/not-found-4064375-3363936.webp";
 import Layout from "../components/Layout";
 import NotFoundComp from "../components/Notfound";
-const Home = ({ setWishedProducts, wishedProducts }) => {
+const Home = ({
+  setWishedProducts,
+  wishedProducts,
+  cartProducts,
+  setcartProducts,
+}) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +33,7 @@ const Home = ({ setWishedProducts, wishedProducts }) => {
     };
     fetchData();
   }, []);
- 
+
   const FilterProducts = (type) => {
     if (type === "" && searchTerm.trim() === "") {
       console.log("check1");
@@ -69,7 +74,7 @@ const Home = ({ setWishedProducts, wishedProducts }) => {
       {loading ? (
         <div
           role="status"
-          className=" mt-[35vh] sm:mt-[30vh] md:mt-[20vh] device-screen flex justify-center items-center"
+          className="mt-[25vh] md:mt-[20vh]   device-screen flex justify-center items-center py-4"
         >
           <svg
             aria-hidden="true"
@@ -92,13 +97,18 @@ const Home = ({ setWishedProducts, wishedProducts }) => {
       ) : (
         <>
           {NotFound ? (
-            <NotFoundComp image={notfoundgif} caption="Sorry search results not found!"/>
+            <NotFoundComp
+              image={notfoundgif}
+              caption="Sorry search results not found!"
+            />
           ) : (
-            <div className="main mt-[35vh] sm:mt-[30vh] md:mt-[20vh]  device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 py-5 ">
+            <div className="main mt-[25vh] md:mt-[20vh]      device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 py-5 ">
               {filteredData &&
                 filteredData.map((product) => {
                   return (
                     <ProductCard
+                      cartProducts={cartProducts}
+                      setcartProducts={setcartProducts}
                       key={product.id}
                       product={product}
                       wishedProducts={wishedProducts}

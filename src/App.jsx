@@ -8,9 +8,22 @@ import "./App.css";
 import Cart from "./pages/Cart";
 
 const App = () => {
-  
+  // const testobj = {
+  //   id: 1,
+  //   title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  //   price: 109.95,
+  //   description:
+  //     "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+  //   category: "men's clothing",
+  //   image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+  //   rating: {
+  //     rate: 3.9,
+  //     count: 120,
+  //   },
+  // };
 
     const [wishedProducts, setWishedProducts] = useState([]);
+    const [cartProducts, setcartProducts] = useState([]);
   return (
     <Router>
       <Routes>
@@ -19,6 +32,8 @@ const App = () => {
           path="/"
           element={
             <Home
+              cartProducts={cartProducts}
+              setcartProducts={setcartProducts}
               wishedProducts={wishedProducts}
               setWishedProducts={setWishedProducts}
             />
@@ -28,13 +43,23 @@ const App = () => {
           path="/mywishlist"
           element={
             <MyWishlist
+              cartProducts={cartProducts}
+              setcartProducts={setcartProducts}
               wishedProducts={wishedProducts}
               setWishedProducts={setWishedProducts}
             />
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cartProducts={cartProducts}
+              setcartProducts={setcartProducts}
+            />
+          }
+        />
       </Routes>
     </Router>
   );

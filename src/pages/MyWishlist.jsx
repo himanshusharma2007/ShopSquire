@@ -3,7 +3,12 @@ import Layout from "../components/Layout";
 import ProductCard from "../components/ProductCard";
 import NotFoundComp from "../components/Notfound";
 import image from "../assets/6028969.jpg";
-const MyWishlist = ({ setWishedProducts, wishedProducts }) => {
+const MyWishlist = ({
+  setWishedProducts,
+  wishedProducts,
+  cartProducts,
+  setcartProducts,
+}) => {
   const [notFound, setNotFound] = useState(false);
   useEffect(() => {
     if (Object.keys(wishedProducts).length === 0) setNotFound(true);
@@ -15,7 +20,7 @@ const MyWishlist = ({ setWishedProducts, wishedProducts }) => {
   return (
     <Layout>
       {notFound ? (
-        <NotFoundComp image={image} caption="Your wishlist is empty yet!"/>
+        <NotFoundComp image={image} caption="Your wishlist is empty yet!" />
       ) : (
         <div className="mt-[35vh] sm:mt-[30vh] md:mt-[20vh]  device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-20 px-4 py-5">
           {wishedProducts &&
@@ -24,6 +29,8 @@ const MyWishlist = ({ setWishedProducts, wishedProducts }) => {
                 <ProductCard
                   key={product.id}
                   product={product}
+                  cartProducts={cartProducts}
+                  setcartProducts={setcartProducts}
                   wishedProducts={wishedProducts}
                   setWishedProducts={setWishedProducts}
                   close

@@ -21,7 +21,7 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
     <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 max-h-[35vh] overflow-y-hidden">
       <div className=" mx-auto flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
-          <button className="md:hidden mr-4" onClick={toggleDrawer}>
+          <button className="md:hidden mr-3" onClick={toggleDrawer}>
             <FaBars className="text-gray-600 text-xl" />
           </button>
           <Link to="/">
@@ -45,7 +45,7 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
-        <div className="flex items-center space-x-2 sm:space-x-6">
+        <div className="flex items-center space-x-3 md:space-x-2 sm:space-x-6">
           <Link to="/">
             <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
               <FaHome className="text-xl" />
