@@ -8,6 +8,7 @@ const Home = ({
   wishedProducts,
   cartProducts,
   setcartProducts,
+  noOfCartItems,
 }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -67,6 +68,7 @@ const Home = ({
   };
   return (
     <Layout
+      noOfCartItems={noOfCartItems}
       FilterProducts={FilterProducts}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}

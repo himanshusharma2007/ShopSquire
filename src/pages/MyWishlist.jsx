@@ -8,6 +8,7 @@ const MyWishlist = ({
   wishedProducts,
   cartProducts,
   setcartProducts,
+  noOfCartItems
 }) => {
   const [notFound, setNotFound] = useState(false);
   useEffect(() => {
@@ -18,7 +19,7 @@ const MyWishlist = ({
   }, [wishedProducts]);
 
   return (
-    <Layout>
+    <Layout noOfCartItems={noOfCartItems} pageHeading="My Wishlist">
       {notFound ? (
         <NotFoundComp image={image} caption="Your wishlist is empty yet!" />
       ) : (

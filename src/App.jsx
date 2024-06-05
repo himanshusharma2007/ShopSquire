@@ -22,46 +22,53 @@ const App = () => {
   //   },
   // };
 
-    const [wishedProducts, setWishedProducts] = useState([]);
-    const [cartProducts, setcartProducts] = useState([]);
+  const [wishedProducts, setWishedProducts] = useState([]);
+  const [cartProducts, setcartProducts] = useState([]);
+  var noOfCartItems = cartProducts.length;
   return (
-    <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <Home
-              cartProducts={cartProducts}
-              setcartProducts={setcartProducts}
-              wishedProducts={wishedProducts}
-              setWishedProducts={setWishedProducts}
-            />
-          }
-        />
-        <Route
-          path="/mywishlist"
-          element={
-            <MyWishlist
-              cartProducts={cartProducts}
-              setcartProducts={setcartProducts}
-              wishedProducts={wishedProducts}
-              setWishedProducts={setWishedProducts}
-            />
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cartProducts={cartProducts}
-              setcartProducts={setcartProducts}
-            />
-          }
-        />
-      </Routes>
-    </Router>
+    <div className="app ">
+      {" "}
+      <Router>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Home
+                noOfCartItems={noOfCartItems}
+                cartProducts={cartProducts}
+                setcartProducts={setcartProducts}
+                wishedProducts={wishedProducts}
+                setWishedProducts={setWishedProducts}
+              />
+            }
+          />
+          <Route
+            path="/mywishlist"
+            element={
+              <MyWishlist
+                noOfCartItems={noOfCartItems}
+                cartProducts={cartProducts}
+                setcartProducts={setcartProducts}
+                wishedProducts={wishedProducts}
+                setWishedProducts={setWishedProducts}
+              />
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                noOfCartItems={noOfCartItems}
+                cartProducts={cartProducts}
+                setcartProducts={setcartProducts}
+              />
+            }
+          />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 

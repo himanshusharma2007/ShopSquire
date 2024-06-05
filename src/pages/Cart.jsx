@@ -4,7 +4,7 @@ import NotFoundComp from "../components/Notfound";
 import image from "../assets/6028969.jpg";
 import { GrClose } from "react-icons/gr";
 
-const Cart = ({ cartProducts, setcartProducts }) => {
+const Cart = ({ cartProducts, setcartProducts, noOfCartItems }) => {
   const [productQuantities, setProductQuantities] = useState(
     cartProducts.reduce((acc, product) => {
       acc[product.id] = 1;
@@ -35,7 +35,7 @@ const Cart = ({ cartProducts, setcartProducts }) => {
   };
 
   return (
-    <Layout>
+    <Layout noOfCartItems={noOfCartItems} pageHeading="My Cart">
       {cartProducts.length === 0 ? (
         <NotFoundComp
           image={image}
@@ -177,12 +177,14 @@ const Cart = ({ cartProducts, setcartProducts }) => {
             ))}
           </div>
 
-          <div className=" w-full  flex flex-col justify-center items-end pr-2 Ubuntu text-2xl mt-3 ">
-            <div className="list1">
-              <h1>Total Items : {totalItems}</h1>
-            </div>
-            <div className="list1">
-              <h1>Total Price : ${totalPrice.toFixed(2)}</h1>
+          <div className=" w-full  flex flex-col justify-center sm:items-end pr-2 Ubuntu text-2xl mt-3 ">
+            <div className="wraper">
+              <div className="list1">
+                <h1>Total Items : {totalItems}</h1>
+              </div>
+              <div className="list1">
+                <h1>Total Amount : ${totalPrice.toFixed(2)}</h1>
+              </div>
             </div>
           </div>
         </div>

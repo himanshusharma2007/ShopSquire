@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { FaBars, FaSearch, FaUser, FaHeart, FaHome, FaShoppingCart } from "react-icons/fa";
+import {
+  FaBars,
+  FaSearch,
+  FaUser,
+  FaHeart,
+  FaHome,
+  FaShoppingCart,
+} from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -10,7 +17,13 @@ import { GrClose } from "react-icons/gr";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
 
-const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
+const Header = ({
+  FilterProducts,
+  searchTerm,
+  setSearchTerm,
+  noOfCartItems,
+  pageHeading,
+}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -25,7 +38,7 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
             <FaBars className="text-gray-600 text-xl" />
           </button>
           <Link to="/">
-            <h1 className="website-name text-3xl  font-bold text-gray-800">
+            <h1 className=" Lobster text-3xl  font-bold text-gray-800">
               ShopSquire
             </h1>
           </Link>
@@ -45,7 +58,7 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
-        <div className="flex items-center space-x-3 md:space-x-2 sm:space-x-6">
+        <div className="flex items-center space-x-4  ">
           <Link to="/">
             <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
               <FaHome className="text-xl" />
@@ -60,7 +73,14 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
           </Link>
           <Link to="/cart">
             <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
-              <FaShoppingCart className="text-xl" />
+              <div className="cart-icon  relative">
+                <FaShoppingCart className="text-xl" />
+                {noOfCartItems > 0 && (
+                  <div className="items-in-cart absolute -top-2 -right-2 flex justify-center items-center w-4 h-4 bg-red-500 text-white rounded-full text-[14px] ">
+                    {noOfCartItems}
+                  </div>
+                )}
+              </div>
               <p className="hidden md:block Ubuntu">Cart</p>
             </button>
           </Link>
@@ -87,11 +107,19 @@ const Header = ({ FilterProducts, searchTerm, setSearchTerm }) => {
           <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
       </div>
-      <Filters
-        FilterProducts={FilterProducts}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
+      {pageHeading ? (
+        <div className="bg-gray-200 flex justify-center items-center w-full py-3">
+          <div className="heading tracking-wider text-3xl font-bold Lobster text-gray-600">
+            {pageHeading}
+          </div>
+        </div>
+      ) : (
+        <Filters
+          FilterProducts={FilterProducts}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      )}
       <Drawer
         open={isDrawerOpen}
         onClose={toggleDrawer}
