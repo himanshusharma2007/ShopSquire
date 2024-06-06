@@ -3,8 +3,10 @@ import Layout from "../components/Layout";
 import NotFoundComp from "../components/Notfound";
 import image from "../assets/6028969.jpg";
 import { GrClose } from "react-icons/gr";
+import { Link } from "react-router-dom";
+import { FaTrashCan } from "react-icons/fa6";
 
-const Cart = ({ cartProducts, setcartProducts, noOfCartItems }) => {
+const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
   const [productQuantities, setProductQuantities] = useState(
     cartProducts.reduce((acc, product) => {
       acc[product.id] = 1;
@@ -60,11 +62,18 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems }) => {
                   {cartProducts.map((product) => (
                     <tr key={product.id} className="Lora text-center">
                       <td className="border px-4 py-2 flex justify-center items-center">
-                        <img
-                          src={product.image}
-                          alt={product.title}
-                          className="w-[70px] h-[70px]"
-                        />
+                        <Link to="/product-details">
+                          <div
+                            onClick={() => setProduct(product)}
+                            className="product-image h-20  w-fit p-2"
+                          >
+                            <img
+                              src={product.image}
+                              alt={product.title}
+                              className="w-full h-full object-contain "
+                            />
+                          </div>
+                        </Link>
                       </td>
                       <td className="border px-4 py-2">{product.title}</td>
                       <td className="border px-4 py-2">
@@ -103,9 +112,9 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems }) => {
                       <td className="border px-4 py-2">
                         <button
                           onClick={() => removeProduct(product.id)}
-                          className="px-3 py-2 text-white bg-red-500 rounded-md"
+                          className="px-3 py-2  text-red-500 rounded-md"
                         >
-                          Remove
+                          <FaTrashCan fontSize="25px"/>
                         </button>
                       </td>
                     </tr>
@@ -124,11 +133,18 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems }) => {
               >
                 <div className="flex flex-col items-center justify-start relative w-full py-4 ">
                   <div className="relative image p-1 w-full h-[30vh] ">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-full   object-contain"
-                    />
+                    <Link to="/product-details">
+                      <div
+                        onClick={() => setProduct(product)}
+                        className="product-image h-[40vh]  w-fit p-2"
+                      >
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="w-full h-full object-contain "
+                        />
+                      </div>
+                    </Link>
                     <button
                       onClick={() => removeProduct(product.id)}
                       className="like absolute top-0 right-2 bg-white  rounded-full p-2"

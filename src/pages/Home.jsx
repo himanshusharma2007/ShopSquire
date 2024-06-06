@@ -9,6 +9,7 @@ const Home = ({
   cartProducts,
   setcartProducts,
   noOfCartItems,
+  setProduct,
 }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -72,6 +73,7 @@ const Home = ({
       FilterProducts={FilterProducts}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
+
     >
       {loading ? (
         <div
@@ -109,6 +111,7 @@ const Home = ({
                 filteredData.map((product) => {
                   return (
                     <ProductCard
+                      setProduct={setProduct}
                       cartProducts={cartProducts}
                       setcartProducts={setcartProducts}
                       key={product.id}

@@ -9,6 +9,7 @@ const Layout = ({
   setSearchTerm,
   noOfCartItems,
   pageHeading,
+  
 }) => {
   return (
     <>

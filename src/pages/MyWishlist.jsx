@@ -8,7 +8,8 @@ const MyWishlist = ({
   wishedProducts,
   cartProducts,
   setcartProducts,
-  noOfCartItems
+  noOfCartItems,
+  setProduct,
 }) => {
   const [notFound, setNotFound] = useState(false);
   useEffect(() => {
@@ -28,6 +29,7 @@ const MyWishlist = ({
             wishedProducts.map((product) => {
               return (
                 <ProductCard
+                  setProduct={setProduct}
                   key={product.id}
                   product={product}
                   cartProducts={cartProducts}

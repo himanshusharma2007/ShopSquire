@@ -11,8 +11,8 @@ const ProductCard = ({
   close,
   cartProducts,
   setcartProducts,
+  setProduct,
 }) => {
-
   const [like, setLike] = useState(false);
   const [inCart, setInCart] = useState(false);
   useEffect(() => {
@@ -20,14 +20,13 @@ const ProductCard = ({
     if (iswished) {
       setLike(true);
     }
-    console.log('in use effect  :>> ', cartProducts );
+   
     const iscart =
-      cartProducts &&  cartProducts.some((p) => p.id === product.id);
+      cartProducts && cartProducts.some((p) => p.id === product.id);
 
     if (iscart) {
       setInCart(true);
     }
-
   }, [product]);
   const handelLikeCLick = () => {
     setLike(!like);
@@ -45,14 +44,22 @@ const ProductCard = ({
     setcartProducts([...cartProducts, product]);
     console.log("in   handelAddCart:>> ", cartProducts);
   };
+ 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  Lora">
-      <div className="relative w-full h-[40vh] ">
-        <img
-          src={product.image}
-          alt={product.title}
-          className="w-full h-full object-contain "
-        />
+      <div className="relative w-full h-[40vh]   flex justify-center">
+        <Link to="/product-details">
+          <div
+            onClick={() => setProduct(product)}
+            className="product-image h-[40vh]  w-fit p-2"
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-full object-contain "
+            />
+          </div>
+        </Link>
         {close ? (
           <button
             onClick={handelclose}
@@ -94,7 +101,7 @@ const ProductCard = ({
           {inCart ? (
             <Link to="/cart">
               <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
-               Go to Cart
+                Go to Cart
               </button>
             </Link>
           ) : (
