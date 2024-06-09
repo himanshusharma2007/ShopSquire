@@ -14,7 +14,7 @@ const App = () => {
   const [wishedProducts, setWishedProducts] = useState([]);
   const [cartProducts, setcartProducts] = useState([]);
   const [product, setProduct] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(true);
+
   const [modelText, setModelText] = useState("");
   const [showModel, setShowModel] = useState(false);
 
@@ -27,8 +27,8 @@ const App = () => {
           {showModel && (
             <Modal
               modelText={modelText}
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
+              isOpen={showModel}
+              onClose={() => setShowModel(false)}
             />
           )}
           <Routes>
@@ -61,7 +61,15 @@ const App = () => {
                 />
               }
             />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  setWishedProducts={setWishedProducts}
+                  setcartProducts={setcartProducts}
+                />
+              }
+            />
             <Route path="/signup" element={<Signup />} />
             <Route
               path="/cart"

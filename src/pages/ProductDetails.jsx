@@ -81,7 +81,7 @@ const ProductDetails = ({
             )}
             {like ? (
               <Link to="/mywishlist">
-                <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
+                <button className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300">
                   View in Wishlist
                 </button>
               </Link>

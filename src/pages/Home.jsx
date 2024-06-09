@@ -4,6 +4,8 @@ import notfoundgif from "../assets/not-found-4064375-3363936.webp";
 import Layout from "../components/Layout";
 import NotFoundComp from "../components/Notfound";
 import { useAuth } from "../hooks/UseAuth";
+import { db, auth, doc, setDoc, getDoc } from "../firebase/firebase";
+
 const Home = ({
   setWishedProducts,
   wishedProducts,
@@ -19,7 +21,8 @@ const Home = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [NotFound, setNotFound] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { isLoggedIn, isSignedUp, isLoggedOut } = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       const url = "https://fakestoreapi.com/products";
@@ -37,20 +40,51 @@ const Home = ({
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchUserProducts();
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isSignedUp && !isLoggedOut) {
+      saveUserProducts();
+    }
+  }, [wishedProducts, cartProducts]);
+
+  const fetchUserProducts = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const userDoc = await getDoc(doc(db, "usersProducts", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setWishedProducts(userData.wishedProducts || []);
+        setcartProducts(userData.cartProducts || []);
+        console.log("userData.wishedProducts :>> ", userData.wishedProducts);
+      }
+    }
+  };
+
+  const saveUserProducts = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      await setDoc(doc(db, "usersProducts", user.uid), {
+        wishedProducts,
+        cartProducts,
+      });
+    }
+  };
+
   const FilterProducts = (type) => {
     if (type === "" && searchTerm.trim() === "") {
-      console.log("check1");
       setFilteredData(data);
       return;
     } else if (type.trim() !== "" && searchTerm.trim() === "") {
-      console.log("check2");
       const filteredData = data.filter(
         (product) => product.category.toLowerCase() === type.toLowerCase()
       );
-
       setFilteredData(filteredData);
     } else {
-      console.log("check3");
       const filteredData = data.filter(
         (product) =>
           product.category.toLowerCase().includes(type.toLowerCase()) ||
@@ -68,6 +102,7 @@ const Home = ({
       }
     }
   };
+
   return (
     <Layout
       noOfCartItems={noOfCartItems}
@@ -78,7 +113,7 @@ const Home = ({
       {loading ? (
         <div
           role="status"
-          className="mt-[25vh] md:mt-[20vh]   device-screen flex justify-center items-center py-4"
+          className="mt-[25vh] md:mt-[20vh] device-screen flex justify-center items-center py-4"
         >
           <svg
             aria-hidden="true"
@@ -106,7 +141,7 @@ const Home = ({
               caption="Sorry search results not found!"
             />
           ) : (
-            <div className="main mt-[25vh] md:mt-[20vh]      device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 py-5 ">
+            <div className="main mt-[25vh] md:mt-[20vh] device-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 py-5">
               {filteredData &&
                 filteredData.map((product) => {
                   return (

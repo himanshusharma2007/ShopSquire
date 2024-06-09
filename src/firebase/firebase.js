@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore,doc,setDoc,getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -26,7 +26,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
- 
 } from "firebase/auth";
 
 export {
@@ -37,5 +36,7 @@ export {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
-
+  doc,
+  setDoc,
+  getDoc,
 };

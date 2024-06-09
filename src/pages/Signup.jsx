@@ -3,11 +3,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
+import { useAuth } from "../hooks/UseAuth";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const {setIsSignedUp} = useAuth();
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const Signup = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       // Redirect to the login page after successful signup
-
+       setIsSignedUp(true);
       navigate("/login");
     } catch (error) {
       console.error("Error during sign up: ", error);

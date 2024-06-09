@@ -10,16 +10,17 @@ import { doc, setDoc } from "firebase/firestore";
 import { Google } from "@mui/icons-material";
 import Header from "../components/Header";
 import { useAuth } from "../hooks/UseAuth.jsx";
-import { BiLogOut } from "react-icons/bi";
 import { CgLogOut } from "react-icons/cg";
+import { LiaBackwardSolid } from "react-icons/lia";
+import { IoIosLogOut } from "react-icons/io";
 
-const Login = () => {
+const Login = ({ setWishedProducts, setcartProducts }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loging, setLoging] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, setIsLoggedOut } = useAuth();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
 
@@ -34,7 +35,7 @@ const Login = () => {
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
       });
-
+      setIsLoggedOut(false)
       setIsLoggedIn(true);
       setLoging(false);
       navigate("/");
@@ -54,7 +55,7 @@ const Login = () => {
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
       });
-
+      setIsLoggedOut(false);
       setIsLoggedIn(true);
       setLoging(false);
       navigate("/");
@@ -63,21 +64,34 @@ const Login = () => {
       setError(error.message);
     }
   };
-
+  const handleLogOut = () => {
+    setIsLoggedOut((prev) => (prev = true));
+    setIsLoggedIn(false);
+    setcartProducts([]);
+    setWishedProducts([]);
+  };
   return (
     <div className=" mt-[8vh] h-[92vh]  Lora flex flex-col justify-center items-center md:bg-gray-100 relative">
       <Header hide />
       {isLoggedIn ? (
-        <div>
-          <h1 className="text-3xl">
+        <div className="flex flex-col Lora space-y-3 p-2 justify-center items-center">
+          <h1 className="text-3xl md:w-[60%] text-center">
             You already have Logged in. Do you want to Log out?
           </h1>
-          <button
-            onClick={() => setIsLoggedIn(false)}
-            className="bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 "
-          >
-            Logout <CgLogOut />
-          </button>
+          <div className="btns flex gap-2 justify-center items-center md:w-[50%]">
+            <button
+              onClick={() => navigate("/")}
+              className="flex gap-3 justify-center items-center bg-blue-500 w-full hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 text-nowrap"
+            >
+              <LiaBackwardSolid fontSize="30px" /> Go Back
+            </button>
+            <button
+              onClick={handleLogOut}
+              className="flex gap-3  justify-center items-center bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 "
+            >
+              Logout <IoIosLogOut fontSize="30px" />
+            </button>
+          </div>
         </div>
       ) : (
         <div className="bg-white rounded-lg md:shadow-lg p-8 w-full max-w-sm">
