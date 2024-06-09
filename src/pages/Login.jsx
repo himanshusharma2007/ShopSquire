@@ -7,12 +7,11 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { db, auth } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { Google } from "@mui/icons-material";
 import Header from "../components/Header";
 import { useAuth } from "../hooks/UseAuth.jsx";
-import { CgLogOut } from "react-icons/cg";
 import { LiaBackwardSolid } from "react-icons/lia";
 import { IoIosLogOut } from "react-icons/io";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = ({ setWishedProducts, setcartProducts }) => {
   const [email, setEmail] = useState("");
@@ -182,7 +181,7 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
                 className="bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-300 flex items-center justify-center"
                 disabled={loging}
               >
-                <Google className="mr-2" />
+                <FaGoogle className="mr-2" />
                 Sign in with Google
               </button>
               <p className="text-gray-600 text-center">
