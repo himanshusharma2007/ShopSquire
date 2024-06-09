@@ -132,11 +132,11 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                 className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  Lora  sm:mx-8 w-full"
               >
                 <div className="flex flex-col items-center justify-start relative w-full py-4 ">
-                  <div className="relative image p-1 w-full h-[30vh] ">
+                  <div className="relative image p-1 w-auto h-[40vh] bg ">
                     <Link to="/product-details">
                       <div
                         onClick={() => setProduct(product)}
-                        className="product-image h-[40vh]  w-fit p-2"
+                        className="product-image h-full  w-auto p-2"
                       >
                         <img
                           src={product.image}
@@ -147,7 +147,7 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                     </Link>
                     <button
                       onClick={() => removeProduct(product.id)}
-                      className="like absolute top-0 right-2 bg-white  rounded-full p-2"
+                      className="like absolute -top-2 -right-4   rounded-full p-2"
                     >
                       <GrClose fontSize="28px" fontWeight="200" />
                     </button>

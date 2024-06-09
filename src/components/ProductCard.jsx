@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { PiHeartStraightFill, PiHeartStraightThin } from "react-icons/pi";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const ProductCard = ({
   product,
   setWishedProducts,
@@ -12,15 +11,19 @@ const ProductCard = ({
   cartProducts,
   setcartProducts,
   setProduct,
+  setShowModel,
+  isLoggedIn,
+  setModelText,
 }) => {
   const [like, setLike] = useState(false);
   const [inCart, setInCart] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     var iswished = wishedProducts.some((p) => p.id === product.id);
     if (iswished) {
       setLike(true);
     }
-   
+
     const iscart =
       cartProducts && cartProducts.some((p) => p.id === product.id);
 
@@ -29,6 +32,11 @@ const ProductCard = ({
     }
   }, [product]);
   const handelLikeCLick = () => {
+    if (!isLoggedIn) {
+      setModelText("To add items in your wishlist you have to login first ");
+      setShowModel(true);
+      return;
+    }
     setLike(!like);
     if (!like) {
       setWishedProducts([...wishedProducts, product]);
@@ -36,30 +44,43 @@ const ProductCard = ({
       setWishedProducts(wishedProducts.filter((p) => p.id !== product.id));
     }
   };
+  const handleProductCLick = () => {
+    if (!isLoggedIn) {
+      setModelText("To see product details you have to login first ");
+      setShowModel(true);
+      return;
+    }
+    setProduct(product);
+    navigate("/product-details");
+  };
   const handelclose = () => {
     setWishedProducts(wishedProducts.filter((p) => p.id !== product.id));
   };
   const handelAddCart = () => {
+    if (!isLoggedIn) {
+      setModelText("To add items in your cart you have to login first ");
+      setShowModel(true);
+      return;
+    }
     setInCart(true);
     setcartProducts([...cartProducts, product]);
     console.log("in   handelAddCart:>> ", cartProducts);
   };
- 
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  Lora">
       <div className="relative w-full h-[40vh]   flex justify-center">
-        <Link to="/product-details">
-          <div
-            onClick={() => setProduct(product)}
-            className="product-image h-[40vh]  w-fit p-2"
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full h-full object-contain "
-            />
-          </div>
-        </Link>
+        <div
+          onClick={handleProductCLick}
+          className="product-image h-[40vh]  w-fit p-2"
+        >
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-full object-contain "
+          />
+        </div>
+
         {close ? (
           <button
             onClick={handelclose}
@@ -99,11 +120,12 @@ const ProductCard = ({
             ${product.price}
           </span>
           {inCart ? (
-            <Link to="/cart">
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
-                Go to Cart
-              </button>
-            </Link>
+            <button
+              onClick={() => navigate("/cart")}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300"
+            >
+              Go to Cart
+            </button>
           ) : (
             <button
               onClick={handelAddCart}

@@ -23,6 +23,7 @@ const Header = ({
   setSearchTerm,
   noOfCartItems,
   pageHeading,
+  hide,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -31,7 +32,7 @@ const Header = ({
   };
 
   return (
-    <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 max-h-[35vh] overflow-y-hidden">
+    <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10   max-h-[35vh] overflow-y-hidden">
       <div className=" mx-auto flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
           <button className="md:hidden mr-3" onClick={toggleDrawer}>
@@ -43,22 +44,25 @@ const Header = ({
             </h1>
           </Link>
         </div>
-        <div className="large-screen-search hidden md:flex items-center w-[40vw] ml-[110px]">
-          <div className="relative mx-2 w-full">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="border border-gray-300 w-full rounded-full px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                FilterProducts(searchTerm);
-              }}
-            />
-            <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        {!hide && (
+          <div className="large-screen-search hidden md:flex items-center w-[40vw] ml-[155px]">
+            <div className="relative mx-2 w-full">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="border border-gray-300 w-full rounded-full px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  FilterProducts(searchTerm);
+                }}
+              />
+              <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-4  ">
+        )}
+
+        <div className="flex items-center space-x-2 sm:space-x-4  ">
           <Link to="/">
             <button className="flex justify-center items-center space-x-1 text-gray-600 hover:text-gray-800">
               <FaHome className="text-xl" />
@@ -92,34 +96,38 @@ const Header = ({
           </Link>
         </div>
       </div>
-      <div className="flex md:hidden items-center w-full ">
-        <div className="relative mx-4 my-1 w-full">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="small-screen-search border w-full Ubuntu border-gray-300 rounded-sm px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              FilterProducts(searchTerm);
-            }}
-          />
-          <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </div>
-      </div>
-      {pageHeading ? (
-        <div className="bg-gray-200 flex justify-center items-center w-full py-3">
-          <div className="heading tracking-wider text-3xl font-bold Lobster text-gray-600">
-            {pageHeading}
+      {!hide && (
+        <div className="flex md:hidden items-center w-full ">
+          <div className="relative mx-4 my-1 w-full">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="small-screen-search border w-full Ubuntu border-gray-300 rounded-sm px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                FilterProducts(searchTerm);
+              }}
+            />
+            <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
-      ) : (
-        <Filters
-          FilterProducts={FilterProducts}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
       )}
+      {!hide &&
+        (pageHeading ? (
+          <div className="bg-gray-200 flex justify-center items-center w-full py-3">
+            <div className="heading tracking-wider text-3xl font-bold Lobster text-gray-600">
+              {pageHeading}
+            </div>
+          </div>
+        ) : (
+          <Filters
+            FilterProducts={FilterProducts}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+        ))}
+
       <Drawer
         open={isDrawerOpen}
         onClose={toggleDrawer}

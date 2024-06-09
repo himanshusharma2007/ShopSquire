@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard";
 import notfoundgif from "../assets/not-found-4064375-3363936.webp";
 import Layout from "../components/Layout";
 import NotFoundComp from "../components/Notfound";
+import { useAuth } from "../hooks/UseAuth";
 const Home = ({
   setWishedProducts,
   wishedProducts,
@@ -10,15 +11,15 @@ const Home = ({
   setcartProducts,
   noOfCartItems,
   setProduct,
+  setShowModel,
+  setModelText,
 }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [NotFound, setNotFound] = useState(false);
-  console.log(NotFound);
-
-  console.log(searchTerm);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       const url = "https://fakestoreapi.com/products";
@@ -73,7 +74,6 @@ const Home = ({
       FilterProducts={FilterProducts}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
-
     >
       {loading ? (
         <div
@@ -111,6 +111,9 @@ const Home = ({
                 filteredData.map((product) => {
                   return (
                     <ProductCard
+                      isLoggedIn={isLoggedIn}
+                      setModelText={setModelText}
+                      setShowModel={setShowModel}
                       setProduct={setProduct}
                       cartProducts={cartProducts}
                       setcartProducts={setcartProducts}
