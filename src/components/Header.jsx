@@ -138,31 +138,32 @@ const Header = ({
         <button onClick={toggleDrawer} className="absolute top-4 z-40 right-4">
           <GrClose fontSize="20px" />
         </button>
-        <div className="wraper py-6">
+        <div className="wraper pt-14">
           <List>
-            <ListItem button>
+            <ListItem button component={Link} to="/">
               <ListItemIcon>
-                <FaSearch />
+                <FaHome />
               </ListItemIcon>
-              <ListItemText primary="Search" />
+              <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <FaUser />
-              </ListItemIcon>
-              <ListItemText primary="Login" />
-            </ListItem>
-            <ListItem button>
+
+            <ListItem button component={Link} to="/cart">
               <ListItemIcon>
                 <FiShoppingCart />
               </ListItemIcon>
-              <ListItemText primary="Cart" />
+              <ListItemText primary="My Cart" />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <FaHeart />
               </ListItemIcon>
-              <ListItemText primary="Wishlist" />
+              <ListItemText primary="My Wishlist" />
+            </ListItem>
+            <ListItem button component={Link} to="/login">
+              <ListItemIcon>
+                <FaUser />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
             </ListItem>
             {/* Add more drawer options as needed */}
           </List>

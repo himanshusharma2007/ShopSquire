@@ -1,25 +1,53 @@
-import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
+  db,
+  auth,
+  doc,
+  getDoc,
+  setDoc,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
-import { db, auth } from "../firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
+} from "../firebase/firebase";
 import Header from "../components/Header";
 import { useAuth } from "../hooks/UseAuth.jsx";
 import { LiaBackwardSolid } from "react-icons/lia";
 import { IoIosLogOut } from "react-icons/io";
 import { FaGoogle } from "react-icons/fa";
-
-const Login = ({ setWishedProducts, setcartProducts }) => {
+import { useState } from "react";
+const handleLogOut = async ({
+  setIsLoggedIn,
+  setcartProducts,
+  setWishedProducts,
+  setIsLoggedOut,
+  wishedProducts,
+  cartProducts,
+}) => {
+  setIsLoggedOut(true);
+  setIsLoggedIn(false);
+  const user = auth.currentUser;
+  if (user) {
+    await setDoc(doc(db, "usersProducts", user.uid), {
+      wishedProducts,
+      cartProducts,
+    });
+  }
+  setcartProducts(null);
+  setWishedProducts(null);
+};
+const Login = ({
+  setWishedProducts,
+  setcartProducts,
+  wishedProducts,
+  cartProducts,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loging, setLoging] = useState(false);
-  const { isLoggedIn, setIsLoggedIn, setIsLoggedOut } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, setIsLoggedOut, setIsSignedUp } =
+    useAuth();
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
 
@@ -30,12 +58,24 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;
 
+      // Fetch user data from Firestore
+      const userDoc = await getDoc(doc(db, "usersProducts", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setcartProducts(userData.cartProducts || []);
+        setWishedProducts(userData.wishedProducts || []);
+      } else {
+        setcartProducts([]);
+        setWishedProducts([]);
+      }
+
       // Store the user's login state in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
       });
-      setIsLoggedOut(false)
+      setIsLoggedOut(false);
       setIsLoggedIn(true);
+      setIsSignedUp(false);
       setLoging(false);
       navigate("/");
     } catch (error) {
@@ -50,12 +90,25 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
+      // Fetch user data from Firestore
+      const userDoc = await getDoc(doc(db, "usersProducts", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setcartProducts(userData.cartProducts || []);
+        setWishedProducts(userData.wishedProducts || []);
+      } else {
+        setcartProducts([]);
+        setWishedProducts([]);
+      }
+
       // Store the user's login state in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
       });
       setIsLoggedOut(false);
       setIsLoggedIn(true);
+      setIsSignedUp(false);
+
       setLoging(false);
       navigate("/");
     } catch (error) {
@@ -63,12 +116,7 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
       setError(error.message);
     }
   };
-  const handleLogOut = () => {
-    setIsLoggedOut((prev) => (prev = true));
-    setIsLoggedIn(false);
-    setcartProducts([]);
-    setWishedProducts([]);
-  };
+
   return (
     <div className=" mt-[8vh] h-[92vh]  Lora flex flex-col justify-center items-center md:bg-gray-100 relative">
       <Header hide />
@@ -85,7 +133,16 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
               <LiaBackwardSolid fontSize="30px" /> Go Back
             </button>
             <button
-              onClick={handleLogOut}
+              onClick={() =>
+                handleLogOut({
+                  setIsLoggedIn,
+                  setcartProducts,
+                  setWishedProducts,
+                  setIsLoggedOut,
+                  wishedProducts,
+                  cartProducts,
+                })
+              }
               className="flex gap-3  justify-center items-center bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 "
             >
               Logout <IoIosLogOut fontSize="30px" />
@@ -199,3 +256,4 @@ const Login = ({ setWishedProducts, setcartProducts }) => {
 };
 
 export default Login;
+export { handleLogOut };

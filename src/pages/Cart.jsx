@@ -114,7 +114,7 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                           onClick={() => removeProduct(product.id)}
                           className="px-3 py-2  text-red-500 rounded-md"
                         >
-                          <FaTrashCan fontSize="25px"/>
+                          <FaTrashCan fontSize="25px" />
                         </button>
                       </td>
                     </tr>
@@ -131,8 +131,14 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                 key={product.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer  Lora  sm:mx-8 w-full"
               >
-                <div className="flex flex-col items-center justify-start relative w-full py-4 ">
-                  <div className="relative image p-1 w-auto h-[40vh] bg ">
+                <div className="flex relative flex-col items-center justify-start  w-full py-4 ">
+                  <button
+                    onClick={() => removeProduct(product.id)}
+                    className="like absolute top-2 right-4   rounded-full p-2"
+                  >
+                    <GrClose fontSize="28px" fontWeight="200" />
+                  </button>
+                  <div className=" image p-1 w-auto h-[40vh] bg ">
                     <Link to="/product-details">
                       <div
                         onClick={() => setProduct(product)}
@@ -145,12 +151,6 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                         />
                       </div>
                     </Link>
-                    <button
-                      onClick={() => removeProduct(product.id)}
-                      className="like absolute -top-2 -right-4   rounded-full p-2"
-                    >
-                      <GrClose fontSize="28px" fontWeight="200" />
-                    </button>
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-800 mb-1 h-[77px]  overflow-y-hidden">

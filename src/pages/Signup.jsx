@@ -9,7 +9,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const {setIsSignedUp} = useAuth();
+  const { setIsSignedUp } = useAuth();
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -18,8 +18,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      // Redirect to the login page after successful signup
-       setIsSignedUp(true);
+      setIsSignedUp(true);
       navigate("/login");
     } catch (error) {
       console.error("Error during sign up: ", error);
