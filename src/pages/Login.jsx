@@ -22,7 +22,9 @@ const handleLogOut = async ({
   setIsLoggedOut,
   wishedProducts,
   cartProducts,
+  setNotStore,
 }) => {
+  setNotStore((prev) => (prev = true));
   setIsLoggedOut(true);
   setIsLoggedIn(false);
   const user = auth.currentUser;
@@ -40,6 +42,7 @@ const Login = ({
   setcartProducts,
   wishedProducts,
   cartProducts,
+  setNotStore,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -106,6 +109,7 @@ const Login = ({
         email: user.email,
       });
       setIsLoggedOut(false);
+      setNotStore(false);
       setIsLoggedIn(true);
       setIsSignedUp(false);
 
@@ -141,6 +145,7 @@ const Login = ({
                   setIsLoggedOut,
                   wishedProducts,
                   cartProducts,
+                  setNotStore,
                 })
               }
               className="flex gap-3  justify-center items-center bg-red-500 w-full hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300 "

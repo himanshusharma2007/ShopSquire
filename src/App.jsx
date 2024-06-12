@@ -16,20 +16,23 @@ const App = () => {
   const [product, setProduct] = useState({});
   const [modelText, setModelText] = useState("");
   const [showModel, setShowModel] = useState(false);
+  const [notStore, setNotStore] = useState(false);
   useEffect(() => {
     const saveData = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          console.log("Saving data for user:", user.uid);
-          await setDoc(doc (db, "usersProducts", user.uid), {
-            wishedProducts,
-            cartProducts,
-          });
-          console.log("Data saved successfully");
+      if (!notStore) {
+        try {
+          const user = auth.currentUser;
+          if (user) {
+            console.log("Saving data for user:", user.uid);
+            await setDoc(doc(db, "usersProducts", user.uid), {
+              wishedProducts,
+              cartProducts,
+            });
+            console.log("Data saved successfully");
+          }
+        } catch (error) {
+          console.error("Error saving data to Firestore:");
         }
-      } catch (error) {
-        console.error("Error saving data to Firestore:");
       }
     };
 
@@ -82,6 +85,7 @@ const App = () => {
               path="/login"
               element={
                 <Login
+                  setNotStore={setNotStore}
                   wishedProducts={wishedProducts}
                   cartProducts={cartProducts}
                   setWishedProducts={setWishedProducts}
