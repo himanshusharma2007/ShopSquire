@@ -62,7 +62,7 @@ const Cart = ({ cartProducts, setcartProducts, noOfCartItems, setProduct }) => {
                   {cartProducts.map((product) => (
                     <tr key={product.id} className="Lora text-center">
                       <td className="border px-4 py-2 flex justify-center items-center">
-                        <Link to="/product-details">
+                        <Link to={`/product-details/${product.id}`}>
                           <div
                             onClick={() => setProduct(product)}
                             className="product-image h-20  w-fit p-2"

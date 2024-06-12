@@ -5,7 +5,6 @@ import Layout from "../components/Layout";
 import NotFoundComp from "../components/Notfound";
 import { useAuth } from "../hooks/UseAuth";
 
-
 const Home = ({
   setWishedProducts,
   wishedProducts,
@@ -15,32 +14,21 @@ const Home = ({
   setProduct,
   setShowModel,
   setModelText,
+  data,
+  loading,
+  error,
 }) => {
-  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
   const [NotFound, setNotFound] = useState(false);
   const { isLoggedIn } = useAuth();
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   useEffect(() => {
-    const fetchData = async () => {
-      const url = "https://fakestoreapi.com/products";
-      try {
-        setLoading(true);
-        const response = await fetch(url);
-        const result = await response.json();
-        setLoading(false);
-        setData(result);
-        setFilteredData(result);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-
+    setFilteredData(data);
+  }, [data]);
 
   const FilterProducts = (type) => {
     if (type === "" && searchTerm.trim() === "") {
@@ -82,7 +70,7 @@ const Home = ({
           role="status"
           className="mt-[25vh] md:mt-[20vh] device-screen flex justify-center items-center py-4"
         >
-          {/* Loading spinner */}
+          <div className="w-12 h-12 border-4 border-blue-500 rounded-full border-r-transparent animate-spin"></div>
         </div>
       ) : (
         <>
