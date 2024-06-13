@@ -60,6 +60,7 @@ const Home = ({
 
   return (
     <Layout
+      wishedProducts={wishedProducts}
       noOfCartItems={noOfCartItems}
       FilterProducts={FilterProducts}
       searchTerm={searchTerm}

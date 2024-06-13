@@ -9,11 +9,12 @@ const Layout = ({
   setSearchTerm,
   noOfCartItems,
   pageHeading,
-  
+  wishedProducts,
 }) => {
   return (
     <>
       <Header
+        wishedProducts={wishedProducts}
         pageHeading={pageHeading}
         noOfCartItems={noOfCartItems}
         FilterProducts={FilterProducts}

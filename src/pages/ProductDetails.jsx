@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
-import { FaStar } from "react-icons/fa";
+import { FaCartArrowDown, FaStar } from "react-icons/fa";
 import BackBtn from "../components/BackBtn";
 import { Link } from "react-router-dom";
 import useProductData from "../hooks/useProductData";
@@ -9,6 +9,7 @@ import NotFoundComp from "../components/Notfound";
 import notfoundgif from "../assets/not-found-4064375-3363936.webp";
 import { RiShareForward2Fill } from "react-icons/ri";
 import { GiHeartPlus } from "react-icons/gi";
+import { IoIosEye } from "react-icons/io";
 const ProductDetails = ({
   setWishedProducts,
   wishedProducts,
@@ -129,7 +130,7 @@ const ProductDetails = ({
           )}
           <p className="text-gray-800 mb-4">{description}</p>
           <p className="text-2xl font-bold mb-4">${price}</p>
-          <div className="flex space-x-2">
+          <div className="flex flex-col sm:flex-row  space-x-2">
             {inCart ? (
               <Link to="/cart">
                 <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
@@ -139,23 +140,26 @@ const ProductDetails = ({
             ) : (
               <button
                 onClick={handleAddtoCart}
-                className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300"
+                className="flex bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300"
               >
-                Add to Cart
+                <FaCartArrowDown fontSize={"22px"} className="mr-2" /> Add to
+                Cart
               </button>
             )}
             {like ? (
               <Link to="/mywishlist">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                <button className="flex bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                  <IoIosEye fontSize={"22px"} className="mr-2" />
                   View in Wishlist
                 </button>
               </Link>
             ) : (
               <button
                 onClick={handleAddtoWishlist}
-                className="bg-pink-500 flex  text-white px-4 py-2 rounded-md hover:bg-pink-600 transition duration-300"
+                className="bg-pink-500 flex justify-center items-center text-white px-4 py-2 rounded-md hover:bg-pink-600 transition duration-300"
               >
-                <GiHeartPlus />    Add to Wishlist
+                <GiHeartPlus fontSize={"22px"} className="mr-2" /> Add to
+                Wishlist
               </button>
             )}
             <button
