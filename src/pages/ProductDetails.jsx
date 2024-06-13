@@ -103,7 +103,7 @@ const ProductDetails = ({
   const { title, price, description, category, image, rating } = product;
 
   return (
-    <Layout pageHeading="Product Details">
+    <Layout  pageHeading="Product Details">
       <div className="relative mt-[25vh] md:mt-[20vh] device-screen mx-auto flex flex-col md:flex-row items-center w-full">
         <div className="back absolute top-5 left-5">
           <BackBtn path="/" />
@@ -130,17 +130,17 @@ const ProductDetails = ({
           )}
           <p className="text-gray-800 mb-4">{description}</p>
           <p className="text-2xl font-bold mb-4">${price}</p>
-          <div className="flex flex-col sm:flex-row  space-x-2">
+          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-2 ">
             {inCart ? (
               <Link to="/cart">
-                <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
+                <button className="bg-red-500 w-full text-white px-4 py-2 rounded-md  hover:bg-red-600 transition duration-300">
                   Go to Cart
                 </button>
               </Link>
             ) : (
               <button
                 onClick={handleAddtoCart}
-                className="flex bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300"
+                className="flex   justify-center items-center bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-300"
               >
                 <FaCartArrowDown fontSize={"22px"} className="mr-2" /> Add to
                 Cart
@@ -148,7 +148,7 @@ const ProductDetails = ({
             )}
             {like ? (
               <Link to="/mywishlist">
-                <button className="flex bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                <button className="flex justify-center  bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition w-full  duration-300">
                   <IoIosEye fontSize={"22px"} className="mr-2" />
                   View in Wishlist
                 </button>
@@ -156,7 +156,7 @@ const ProductDetails = ({
             ) : (
               <button
                 onClick={handleAddtoWishlist}
-                className="bg-pink-500 flex justify-center items-center text-white px-4 py-2 rounded-md hover:bg-pink-600 transition duration-300"
+                className="bg-pink-500 flex justify-center items-center text-white px-4 py-2 rounded-md hover:bg-pink-600 transition  duration-300"
               >
                 <GiHeartPlus fontSize={"22px"} className="mr-2" /> Add to
                 Wishlist
@@ -164,7 +164,7 @@ const ProductDetails = ({
             )}
             <button
               onClick={handleShare}
-              className="bg-orange-500 flex  items-center  text-white px-4 py-2 rounded-md hover:bg-orange-600 transition duration-300"
+              className="bg-orange-500  flex justify-center  items-center  text-white px-4 py-2 rounded-md hover:bg-orange-600 transition duration-300"
             >
               <div className="mr-1">Share</div> <RiShareForward2Fill />
             </button>

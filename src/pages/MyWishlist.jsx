@@ -20,7 +20,11 @@ const MyWishlist = ({
   }, [wishedProducts]);
 
   return (
-    <Layout noOfCartItems={noOfCartItems} pageHeading="My Wishlist">
+    <Layout
+      wishedProducts={wishedProducts}
+      noOfCartItems={noOfCartItems}
+      pageHeading="My Wishlist"
+    >
       {notFound ? (
         <NotFoundComp image={image} caption="Your wishlist is empty yet!" />
       ) : (
