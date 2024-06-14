@@ -29,17 +29,16 @@ const Header = ({
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const heartIconRef = useRef(null);
-  const prevWishedProductsLength = useRef(wishedProducts.length);
+  const prevWishedProductsLength = useRef(0);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
   useEffect(() => {
     if (
       heartIconRef.current &&
       Array.isArray(wishedProducts) &&
-      wishedProducts.length > prevWishedProductsLength.current
+      wishedProducts.length > (prevWishedProductsLength.current || 0)
     ) {
       gsap.fromTo(
         heartIconRef.current,
@@ -53,9 +52,8 @@ const Header = ({
         }
       );
     }
-    prevWishedProductsLength.current = wishedProducts.length;
+    prevWishedProductsLength.current = wishedProducts?.length || 0;
   }, [wishedProducts]);
-
   return (
     <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 max-h-[35vh] overflow-y-hidden">
       <div className="mx-auto flex items-center justify-between px-4 py-2">
