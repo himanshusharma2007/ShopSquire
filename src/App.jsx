@@ -115,6 +115,8 @@ const App = () => {
               path="/product-details/:id"
               element={
                 <ProductDetails
+                  setModelText={setModelText}
+                  setShowModel={setShowModel}
                   cartProducts={cartProducts}
                   setcartProducts={setcartProducts}
                   wishedProducts={wishedProducts}

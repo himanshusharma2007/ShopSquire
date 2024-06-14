@@ -130,7 +130,7 @@ const handleProductCLick = () => {
             <div className="text-lg text-gray-300">View Details</div>
           </div>
         </div>
-        <div className="top-right-card bg-white px-1 py-2 rounded-md absolute top-2 right-2 flex flex-col justify-center space-y-2 items-center w-fit h-fit  ">
+        <div className="top-right-card bg-white px-1 py-2 rounded-bl-md absolute top-0 right-0 flex flex-col justify-center space-y-2 items-center w-fit h-fit  ">
           {close ? (
             <button
               onClick={handelclose}

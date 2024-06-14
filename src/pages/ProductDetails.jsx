@@ -10,17 +10,21 @@ import notfoundgif from "../assets/not-found-4064375-3363936.webp";
 import { RiShareForward2Fill } from "react-icons/ri";
 import { GiHeartPlus } from "react-icons/gi";
 import { IoIosEye } from "react-icons/io";
+import { useAuth } from "../hooks/UseAuth";
 const ProductDetails = ({
   setWishedProducts,
   wishedProducts,
   cartProducts,
   setcartProducts,
+  setShowModel,
+  setModelText,
 }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [like, setLike] = useState(false);
   const [inCart, setInCart] = useState(false);
   const { data, loading, error } = useProductData();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (data) {
@@ -39,6 +43,11 @@ const ProductDetails = ({
   }, [product, wishedProducts, cartProducts]);
 
   const handleAddtoWishlist = () => {
+     if (!isLoggedIn) {
+       setModelText("To add items in your Wishlst you have to login first ");
+       setShowModel(true);
+       return;
+     }
     if (product) {
       setLike(true);
       setWishedProducts([...wishedProducts, product]);
@@ -46,6 +55,11 @@ const ProductDetails = ({
   };
 
   const handleAddtoCart = () => {
+      if (!isLoggedIn) {
+        setModelText("To add items in your Cart you have to login first ");
+        setShowModel(true);
+        return;
+      }
     if (product) {
       setInCart(true);
       setcartProducts([...cartProducts, product]);
@@ -103,7 +117,7 @@ const ProductDetails = ({
   const { title, price, description, category, image, rating } = product;
 
   return (
-    <Layout  pageHeading="Product Details">
+    <Layout pageHeading="Product Details">
       <div className="relative mt-[25vh] md:mt-[20vh] device-screen mx-auto flex flex-col md:flex-row items-center w-full">
         <div className="back absolute top-5 left-5">
           <BackBtn path="/" />
