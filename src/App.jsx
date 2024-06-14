@@ -19,7 +19,7 @@ const App = () => {
   const [showModel, setShowModel] = useState(false);
   const [notStore, setNotStore] = useState(false);
   const { data, loading, error } = useProductData();
-  console.log('data from app :>> ', data);
+  // console.log('data from app :>> ', data);
   useEffect(() => {
     const saveData = async () => {
       if (!notStore) {

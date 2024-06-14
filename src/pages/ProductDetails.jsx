@@ -13,8 +13,8 @@ import { IoIosEye } from "react-icons/io";
 import { useAuth } from "../hooks/UseAuth";
 const ProductDetails = ({
   setWishedProducts,
-  wishedProducts,
-  cartProducts,
+  wishedProducts = [],
+  cartProducts = [],
   setcartProducts,
   setShowModel,
   setModelText,
@@ -32,22 +32,21 @@ const ProductDetails = ({
       setProduct(selectedProduct || null);
     }
   }, [data, id]);
-
   useEffect(() => {
     if (product) {
-      const isLiked = wishedProducts.some((p) => p.id === product.id);
+      const isLiked = wishedProducts?.some((p) => p.id === product.id) || false;
       setLike(isLiked);
-      const isInCart = cartProducts.some((p) => p.id === product.id);
+      const isInCart = cartProducts?.some((p) => p.id === product.id) || false;
       setInCart(isInCart);
     }
   }, [product, wishedProducts, cartProducts]);
 
   const handleAddtoWishlist = () => {
-     if (!isLoggedIn) {
-       setModelText("To add items in your Wishlst you have to login first ");
-       setShowModel(true);
-       return;
-     }
+    if (!isLoggedIn) {
+      setModelText("To add items in your Wishlst you have to login first ");
+      setShowModel(true);
+      return;
+    }
     if (product) {
       setLike(true);
       setWishedProducts([...wishedProducts, product]);
@@ -55,11 +54,11 @@ const ProductDetails = ({
   };
 
   const handleAddtoCart = () => {
-      if (!isLoggedIn) {
-        setModelText("To add items in your Cart you have to login first ");
-        setShowModel(true);
-        return;
-      }
+    if (!isLoggedIn) {
+      setModelText("To add items in your Cart you have to login first ");
+      setShowModel(true);
+      return;
+    }
     if (product) {
       setInCart(true);
       setcartProducts([...cartProducts, product]);
